@@ -8,4 +8,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2021-11-23
 ### Changed
-- First release
+- First release based on Readsb [#4871fa0](https://github.com/wiedehopf/readsb/tree/4871fa05f322eb9be62d30a3fba6e8bb952308d0)

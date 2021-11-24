@@ -2,8 +2,8 @@ name: Build
 
 on:
   push:
-    branches:
-      - '*'
+    branches-ignore:
+      - 'main'
     tags-ignore:
       - '*'
   pull_request_target:
@@ -11,10 +11,11 @@ on:
 env:
   HUB_REPO: flighttrackr
   HUB_IMAGE: readsb
-  LABEL_MAINTAINER: Dennis Neufeld <git@dneufeld.net>
-  LABEL_TITLE: readsb
-  LABEL_DESCRIPTION: Dockerized Readsb
-  LABEL_LICENSE: MIT
+  IMAGE_LABELS: |
+    org.opencontainers.image.authors=Dennis Neufeld <git@dneufeld.net>
+    org.opencontainers.image.title=Readsb
+    org.opencontainers.image.description=Dockerized Readsb
+    org.opencontainers.image.licenses=MIT
 
 jobs:
   build:
@@ -47,11 +48,7 @@ jobs:
         with:
           images: ghcr.io/${{ env.HUB_REPO }}/${{ env.HUB_IMAGE }}
           tags: type=sha,format=long
-          labels: |
-            org.opencontainers.image.authors=${{ env.LABEL_MAINTAINER }}
-            org.opencontainers.image.title=${{ env.LABEL_TITLE }}
-            org.opencontainers.image.description=${{ env.LABEL_DESCRIPTION }}
-            org.opencontainers.image.licenses=${{ env.LABEL_LICENSE }}
+          labels: ${{ env.IMAGE_LABELS }}
 
       - name: Build Docker image
         uses: docker/build-push-action@v2.7.0
@@ -59,8 +56,7 @@ jobs:
           platforms: ${{ env.ARCHS }}
           pull: true
           push: false
-          build-args: |
-            UPSTREAM_COMMIT=${{ steps.upstream.outputs.commit }}
+          build-args: UPSTREAM_COMMIT=${{ steps.upstream.outputs.commit }}
           cache-from: type=gha,scope=main
           cache-to: type=gha,scope=main
           tags: ${{ steps.meta.outputs.tags }}

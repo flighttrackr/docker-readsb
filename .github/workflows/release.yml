@@ -1,34 +1,47 @@
-name: Release
+name: Build and Release
 
 on:
   push:
+    branches:
+      - 'main'
     tags:
       - 'v*'
 
 env:
   HUB_REPO: flighttrackr
   HUB_IMAGE: readsb
-  LABEL_MAINTAINER: Dennis Neufeld <git@dneufeld.net>
-  LABEL_TITLE: readsb
-  LABEL_DESCRIPTION: Readsb from wiedehopf as Docker image
-  LABEL_LICENSE: MIT
+  IMAGE_LABELS: |
+    org.opencontainers.image.authors=Dennis Neufeld <git@dneufeld.net>
+    org.opencontainers.image.title=Readsb
+    org.opencontainers.image.description=Dockerized Readsb
+    org.opencontainers.image.licenses=MIT
 
 jobs:
   build:
-    name: Build and Release
+    name: Build and Push
     runs-on: ubuntu-20.04
     env:
       ARCHS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
+    outputs:
+      version: ${{ steps.settings.outputs.version }}
 
     steps:
-      - name: Get version
-        id: version
-        run: echo "::set-output name=current_version::${GITHUB_REF#refs/tags/v}"
-
       - name: Checkout
         uses: actions/checkout@v2.4.0
         with:
           submodules: true
+
+      - name: Set release settings
+        id: settings
+        run: >
+          if [[ $GITHUB_REF == refs/tags/v* ]];
+          then
+            echo "::set-output name=version::${GITHUB_REF#refs/tags/v}"
+            echo "::set-output name=tags::type=semver,pattern={{raw}}"
+          else
+            echo "::set-output name=version::${GITHUB_REF#refs/heads/}"
+            echo "::set-output name=tags::type=edge"
+          fi
 
       - name: Get upstream commit
         id: upstream
@@ -48,12 +61,8 @@ jobs:
         with:
           images: ghcr.io/${{ env.HUB_REPO }}/${{ env.HUB_IMAGE }}
           flavor: latest=auto
-          tags: type=semver,pattern={{raw}}
-          labels: |
-            org.opencontainers.image.authors=${{ env.LABEL_MAINTAINER }}
-            org.opencontainers.image.title=${{ env.LABEL_TITLE }}
-            org.opencontainers.image.description=${{ env.LABEL_DESCRIPTION }}
-            org.opencontainers.image.licenses=${{ env.LABEL_LICENSE }}
+          tags: ${{ steps.settings.outputs.tags }}
+          labels: ${{ env.IMAGE_LABELS }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1.10.0
@@ -68,18 +77,31 @@ jobs:
           platforms: ${{ env.ARCHS }}
           pull: true
           push: true
-          build-args: |
-            UPSTREAM_COMMIT=${{ steps.upstream.outputs.commit }}
+          build-args: UPSTREAM_COMMIT=${{ steps.upstream.outputs.commit }}
           cache-from: type=gha,scope=main
           cache-to: type=gha,scope=main
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.label }}
 
+
+  release:
+    name: Release
+    runs-on: ubuntu-20.04
+    needs:
+      - build
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+        with:
+          submodules: true
+
       - name: Get Changelog entry
         id: changelog
         uses: mindsers/changelog-reader-action@v2.0.0
         with:
-          version: ${{ steps.version.outputs.current_version }}
+          version: ${{ needs.build.outputs.version }}
           path: ./CHANGELOG.md
 
       - name: Release to GitHub

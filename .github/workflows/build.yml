@@ -19,7 +19,7 @@ jobs:
     uses: flighttrackr/workflows/.github/workflows/build-with-upstream.yml@main
     with:
       hub_repo: flighttrackr
-      hub_image: docker-test
+      hub_image: readsb
       image_authors: Dennis Neufeld <git@dneufeld.net>
       image_title: Readsb
       image_description: Dockerized Readsb

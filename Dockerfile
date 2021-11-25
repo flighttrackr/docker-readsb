@@ -1,5 +1,5 @@
 # Builder
-FROM alpine:3.14 AS builder
+FROM alpine:3.15 AS builder
 
 ARG UPSTREAM_REMOTE
 ARG UPSTREAM_BRANCH
@@ -24,7 +24,7 @@ RUN git apply patches/*.patch && \
 
 
 # Release
-FROM alpine:3.14 AS release
+FROM alpine:3.15 AS release
 
 # Packages
 RUN apk add --no-cache bash rtl-sdr ncurses zlib

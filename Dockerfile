@@ -1,6 +1,8 @@
 # Builder
 FROM alpine:3.14 AS builder
 
+ARG UPSTREAM_REMOTE
+ARG UPSTREAM_BRANCH
 ARG UPSTREAM_COMMIT
 
 # Packages
@@ -10,8 +12,8 @@ RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zlib-dev argp-st
 WORKDIR /app
 
 # Get readsb
-RUN git clone -b sid https://github.com/wiedehopf/readsb.git . && \
-    git -c advice.detachedHead=false checkout $UPSTREAM_COMMIT && \
+RUN git clone -b ${UPSTREAM_BRANCH} ${UPSTREAM_REMOTE} . && \
+    git -c advice.detachedHead=false checkout ${UPSTREAM_COMMIT} && \
     mkdir patches
 
 COPY patches/*.patch patches/

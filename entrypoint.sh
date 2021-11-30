@@ -110,6 +110,7 @@ BEAST_CRC_OFF="${BEAST_CRC_OFF:-no}"
 BEAST_DF045_ON="${BEAST_DF045_ON:-no}"
 BEAST_FEC_OFF="${BEAST_FEC_OFF:-no}"
 BEAST_MODEAC="${BEAST_MODEAC:-no}"
+BEAST_BAUDRATE="${BEAST_BAUDRATE:-}"
 
 IFILE="${IFILE:-}"
 IFORMAT="${IFORMAT:-}"
@@ -596,6 +597,11 @@ fi
 if [ "$BEAST_MODEAC" = "yes" ]
 then
     ARGS="${ARGS} --beast-modeac"
+fi
+
+if [ ! -z "$BEAST_BAUDRATE" ]
+then
+    ARGS="${ARGS} --beast-baudrate ${BEAST_BAUDRATE}"
 fi
 
 

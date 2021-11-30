@@ -148,6 +148,7 @@ ENV LAT="" \
     BEAST_DF045_ON="no" \
     BEAST_FEC_OFF="no" \
     BEAST_MODEAC="no" \
+    BEAST_BAUDRATE="" \
     \
     IFILE="" \
     IFORMAT="" \

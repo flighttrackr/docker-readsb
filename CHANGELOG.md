@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.1.0] - 2021-11-30
 ### Changed
 - Update Alpine from 3.14 to 3.15
 - Update Readsb to [#b27ba6b](https://github.com/wiedehopf/readsb/commit/b27ba6bde1d31e8eef6b75d7c7e15adec5d0d0f3)

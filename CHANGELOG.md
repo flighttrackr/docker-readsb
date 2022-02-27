@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Update Readsb to [#cc3b537](https://github.com/wiedehopf/readsb/commit/cc3b5372f7ca9ad0121322ee8c1d60ed4ccb5328)
+- Update Readsb to [#c04c005](https://github.com/wiedehopf/readsb/commit/c04c005d0eb4e325fd8f39cbfb64ca0199615072)
+- Change multiple default values, see [#f0e03c7](https://github.com/flighttrackr/docker-readsb/commit/f0e03c75a15b03733a1e546237b7d68fb49787b8)
 
 ## [1.1.0] - 2021-11-30
 ### Changed

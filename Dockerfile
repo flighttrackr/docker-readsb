@@ -99,6 +99,7 @@ ENV LAT="" \
     JSON_LOCATION_ACCURACY="2" \
     JSON_TRACE_INTERVAL="" \
     JSON_RELIABLE="" \
+    RANGE_OUTLINE_HOURS="" \
     \
     JAERO_TIMEOUT="" \
     \

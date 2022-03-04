@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Add new parameter RANGE_OUTLINE_HOURS
+
 ### Changed
+- Update Readsb to [#e8293d2](https://github.com/wiedehopf/readsb/commit/e8293d2907804ec22d2382057699a6593c6ab7bd)
 
 ## [1.2.0] - 2022-02-27
 ### Changed

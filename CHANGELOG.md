@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Add new parameter RANGE_OUTLINE_HOURS
+- Added new options `RANGE_OUTLINE_HOURS`, `NET_JSON_PORT_INTERVAL`, `NET_JSON_PORT_INCLUDE_NOPOSITION`
 
 ### Changed
-- Update Readsb to [#e8293d2](https://github.com/wiedehopf/readsb/commit/e8293d2907804ec22d2382057699a6593c6ab7bd)
+- Update Readsb to [#4c52c09](https://github.com/wiedehopf/readsb/commit/4c52c09876769396350b59446d2960e37f6c2822)
 
 ## [1.2.0] - 2022-02-27
 ### Changed

@@ -86,6 +86,8 @@ NET_INGEST="${NET_INGEST:-}"
 NET_GARBAGE="${NET_GARBAGE:-}"
 NET_API_PORT="${NET_API_PORT:-}"
 NET_JSON_PORT="${NET_JSON_PORT:-}"
+NET_JSON_PORT_INTERVAL="${NET_JSON_PORT_INTERVAL:-}"
+NET_JSON_PORT_INCLUDE_NOPOSITION="${NET_JSON_PORT_INCLUDE_NOPOSITION:-no}"
 NET_RO_SIZE="${NET_RO_SIZE:-}"
 NET_RO_INTERVAL="${NET_RO_INTERVAL:-0.05}"
 NET_RO_PORT="${NET_RO_PORT:-}" # normally 30002
@@ -482,6 +484,16 @@ fi
 if [ ! -z "$NET_JSON_PORT" ]
 then
     ARGS="${ARGS} --net-json-port ${NET_JSON_PORT}"
+fi
+
+if [ ! -z "$NET_JSON_PORT_INTERVAL" ]
+then
+    ARGS="${ARGS} --net-json-port-interval ${NET_JSON_PORT_INTERVAL}"
+fi
+
+if [ "$NET_JSON_PORT_INCLUDE_NOPOSITION" = "yes" ]
+then
+    ARGS="${ARGS} --net-json-port-include-noposition"
 fi
 
 if [ ! -z "$NET_RO_SIZE" ]

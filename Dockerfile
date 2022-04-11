@@ -18,9 +18,11 @@ RUN git clone -b ${UPSTREAM_BRANCH} ${UPSTREAM_REMOTE} . && \
 
 COPY patches/*.patch patches/
 
-# Apply patches and compile
-RUN git apply patches/*.patch && \
-    make readsb RTLSDR=yes
+# Apply patches
+RUN git apply --whitespace=fix patches/*.patch
+
+# Compile
+RUN make readsb RTLSDR=yes
 
 
 # Release

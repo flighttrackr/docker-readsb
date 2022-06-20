@@ -6,20 +6,14 @@ ARG UPSTREAM_BRANCH
 ARG UPSTREAM_COMMIT
 
 # Packages
-RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zlib-dev argp-standalone
+RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zlib-dev
 
 # Workdir
 WORKDIR /app
 
 # Get readsb
 RUN git clone -b ${UPSTREAM_BRANCH} ${UPSTREAM_REMOTE} . && \
-    git -c advice.detachedHead=false checkout ${UPSTREAM_COMMIT} && \
-    mkdir patches
-
-COPY patches/*.patch patches/
-
-# Apply patches
-RUN git apply --whitespace=fix patches/*.patch
+    git -c advice.detachedHead=false checkout ${UPSTREAM_COMMIT}
 
 # Compile
 RUN make readsb RTLSDR=yes

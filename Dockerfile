@@ -6,7 +6,7 @@ ARG UPSTREAM_BRANCH
 ARG UPSTREAM_COMMIT
 
 # Packages
-RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zlib-dev
+RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zstd-dev zlib-dev
 
 # Workdir
 WORKDIR /app
@@ -23,7 +23,7 @@ RUN make readsb RTLSDR=yes
 FROM alpine:3.16.0 AS release
 
 # Packages
-RUN apk add --no-cache bash rtl-sdr ncurses zlib
+RUN apk add --no-cache bash rtl-sdr ncurses zstd zlib
 
 # Workdir
 WORKDIR /app

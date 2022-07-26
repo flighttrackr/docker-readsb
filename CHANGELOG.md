@@ -6,11 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Added new options `RANGE_OUTLINE_HOURS`, `NET_JSON_PORT_INTERVAL`, `NET_JSON_PORT_INCLUDE_NOPOSITION`
+- Added new options `RANGE_OUTLINE_HOURS`, `NET_JSON_PORT_INTERVAL`, `NET_JSON_PORT_INCLUDE_NOPOSITION`, `WRITE_BINCRAFT_OLD`, `TAR1090_USE_API`
 - Added zstd
 
 ### Changed
-- Update Readsb to [#782f427](https://github.com/wiedehopf/readsb/commit/782f427992bbbaa2ca2643409437eb5e6aa0c1ad)
+- Update Readsb to [#7ac8db5](https://github.com/wiedehopf/readsb/commit/7ac8db5110ea16a824e103788d37dd90774f9547)
 - Removed patches as they are no longer necessary
 
 ## [1.2.0] - 2022-02-27

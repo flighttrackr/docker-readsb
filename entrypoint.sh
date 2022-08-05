@@ -11,6 +11,7 @@ INTERACTIVE_TTL="${INTERACTIVE_TTL:-}"
 ENABLE_BIASTEE="${ENABLE_BIASTEE:-no}"
 QUIET="${QUIET:-yes}"
 DEBUG="${DEBUG:-}"
+DEVEL="${DEVEL:-}"
 
 UUID="${UUID:-}"
 UUID_FILE="${UUID_FILE:-/data/uuid.txt}"
@@ -185,6 +186,15 @@ fi
 if [ ! -z "$DEBUG" ]
 then
     ARGS="${ARGS} --debug ${DEBUG}"
+fi
+
+if [ ! -z "$DEVEL" ]
+then
+    # ; delimiter
+    for DEVEL_i in ${DEVEL//;/ }
+    do
+        ARGS="${ARGS} --devel ${DEVEL_i}"
+    done
 fi
 
 

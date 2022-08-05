@@ -45,6 +45,7 @@ ENV LAT="" \
     ENABLE_BIASTEE="no" \
     QUIET="yes" \
     DEBUG="" \
+    DEVEL="" \
     \
     UUID="" \
     UUID_FILE="/data/uuid.txt" \

@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added new option `DEVEL` (semicolon separated)
+
+### Changed
+- Update Readsb to [#b8ea56e](https://github.com/wiedehopf/readsb/commit/b8ea56e569f55ab6ea834eb6c9477557cd0897da)
 
 ## [1.3.0] - 2022-07-26
 ### Added

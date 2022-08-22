@@ -23,6 +23,7 @@ PPM="${PPM:-0}"
 GAIN="${GAIN:--10}"
 FREQ="${FREQ:-1090000000}"
 PREAMBLE_THRESHOLD="${PREAMBLE_THRESHOLD:-}"
+SDR_BUFFER_SIZE="${SDR_BUFFER_SIZE:-}"
 
 FIX="${FIX:-yes}"
 NO_FIX="${NO_FIX:-no}"
@@ -109,6 +110,7 @@ NET_BEAST_REDUCE_FILTER_ALL="${NET_BEAST_REDUCE_FILTER_ALL:-}"
 NET_BEAST_REDUCE_OUT_PORT="${NET_BEAST_REDUCE_OUT_PORT:-}"
 TAR1090_USE_API="${TAR1090_USE_API:-no}"
 
+DUMP_BEAST="${DUMP_BEAST:-}"
 BEAST_SERIAL="${BEAST_SERIAL:-}"
 BEAST_DF1117_ON="${BEAST_DF1117_ON:-no}"
 BEAST_MLAT_OFF="${BEAST_MLAT_OFF:-no}"
@@ -232,6 +234,11 @@ fi
 if [ ! -z "$PREAMBLE_THRESHOLD" ]
 then
     ARGS="${ARGS} --preamble-threshold ${PREAMBLE_THRESHOLD}"
+fi
+
+if [ ! -z "$SDR_BUFFER_SIZE" ]
+then
+    ARGS="${ARGS} --sdr-buffer-size ${SDR_BUFFER_SIZE}"
 fi
 
 
@@ -603,6 +610,11 @@ then
     ARGS="${ARGS} --tar1090-use-api"
 fi
 
+
+if [ ! -z "$DUMP_BEAST" ]
+then
+    ARGS="${ARGS} --dump-beast ${DUMP_BEAST}"
+fi
 
 if [ ! -z "$BEAST_SERIAL" ]
 then

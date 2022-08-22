@@ -57,6 +57,7 @@ ENV LAT="" \
     GAIN="-10" \
     FREQ="1090000000" \
     PREAMBLE_THRESHOLD="" \
+    SDR_BUFFER_SIZE="" \
     \
     FIX="yes" \
     NO_FIX="no" \
@@ -143,6 +144,7 @@ ENV LAT="" \
     NET_BEAST_REDUCE_OUT_PORT="" \
     TAR1090_USE_API="no" \
     \
+    DUMP_BEAST="" \
     BEAST_SERIAL="" \
     BEAST_DF1117_ON="no" \
     BEAST_MLAT_OFF="no" \

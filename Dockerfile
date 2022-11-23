@@ -1,5 +1,5 @@
 # Builder
-FROM alpine:3.16.3 AS builder
+FROM alpine:3.17.0 AS builder
 
 ARG UPSTREAM_REMOTE
 ARG UPSTREAM_BRANCH
@@ -20,7 +20,7 @@ RUN make readsb RTLSDR=yes
 
 
 # Release
-FROM alpine:3.16.3 AS release
+FROM alpine:3.17.0 AS release
 
 # Packages
 RUN apk add --no-cache bash rtl-sdr ncurses zstd zlib

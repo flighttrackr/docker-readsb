@@ -23,7 +23,7 @@ RUN make readsb RTLSDR=yes
 FROM alpine:3.17.2 AS release
 
 # Packages
-RUN apk add --no-cache bash rtl-sdr ncurses zstd zlib
+RUN apk add --no-cache bash rtl-sdr ncurses-libs zstd-libs zlib
 
 # Workdir
 WORKDIR /app

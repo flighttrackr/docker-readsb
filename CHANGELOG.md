@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new options `DEVEL` (semicolon separated), `SDR_BUFFER_SIZE`, `DUMP_BEAST`, `API_SHUTDOWN_DELAY`
 
 ### Changed
-- Update Readsb to [#f47271e](https://github.com/wiedehopf/readsb/commit/f47271eb30e97a9b528e5a64bb49d3bdcd273f08)
+- Update Readsb to [#f535e51](https://github.com/wiedehopf/readsb/commit/f535e517996ad04ce8126a58757a9b91a82fe542)
 
 ## [1.3.0] - 2022-07-26
 ### Added

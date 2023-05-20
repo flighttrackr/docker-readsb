@@ -39,7 +39,8 @@ MODEAC="${MODEAC:-yes}"
 MODEAC_AUTO="${MODEAC_AUTO:-no}"
 
 MLAT="${MLAT:-yes}"
-FORWARD_MLAT="${FORWARD_MLAT:-yes}"
+FORWARD_MLAT_BEAST="${FORWARD_MLAT:-${FORWARD_MLAT_BEAST:-yes}}"
+FORWARD_MLAT_SBS="${FORWARD_MLAT_SBS:-yes}"
 
 STATS="${STATS:-}"
 STATS_RANGE="${STATS_RANGE:-}"
@@ -285,9 +286,14 @@ then
     ARGS="${ARGS} --mlat"
 fi
 
-if [ "$FORWARD_MLAT" = "yes" ]
+if [ "$FORWARD_MLAT_BEAST" = "yes" ]
 then
     ARGS="${ARGS} --forward-mlat"
+fi
+
+if [ "$FORWARD_MLAT_SBS" = "yes" ]
+then
+    ARGS="${ARGS} --forward-mlat-sbs"
 fi
 
 

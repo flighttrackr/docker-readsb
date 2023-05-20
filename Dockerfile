@@ -73,7 +73,8 @@ ENV LAT="" \
     MODEAC_AUTO="no" \
     \
     MLAT="yes" \
-    FORWARD_MLAT="yes" \
+    FORWARD_MLAT_BEAST="yes" \
+    FORWARD_MLAT_SBS="yes" \
     \
     STATS="" \
     STATS_RANGE="" \

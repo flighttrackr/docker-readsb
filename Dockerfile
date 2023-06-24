@@ -13,10 +13,14 @@ WORKDIR /app
 
 # Get readsb
 RUN git clone -b ${UPSTREAM_BRANCH} ${UPSTREAM_REMOTE} . && \
-    git -c advice.detachedHead=false checkout ${UPSTREAM_COMMIT}
+    git -c advice.detachedHead=false checkout ${UPSTREAM_COMMIT} && \
+    mkdir patches
 
-# Compile
-RUN make readsb RTLSDR=yes
+# Apply patches and compile
+COPY patches/*.patch patches/
+
+RUN git apply patches/*.patch && \
+    make readsb RTLSDR=yes
 
 
 # Release

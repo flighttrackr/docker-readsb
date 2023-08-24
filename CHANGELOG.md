@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new options `FORWARD_MLAT_BEAST` and `FORWARD_MLAT_SBS`, dropped option `FORWARD_MLAT`
 
 ### Changed
-- Update Readsb to [#0059b62](https://github.com/wiedehopf/readsb/commit/0059b6269bdb3c134dfe996fd37f209730b20ed0)
+- Update Readsb to [#fc50225](https://github.com/wiedehopf/readsb/commit/fc50225b4c6497031bdf7473b848180fe08f8eff)
 
 ## [1.3.0] - 2022-07-26
 ### Added

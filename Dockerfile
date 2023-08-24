@@ -16,11 +16,12 @@ RUN git clone -b ${UPSTREAM_BRANCH} ${UPSTREAM_REMOTE} . && \
     git -c advice.detachedHead=false checkout ${UPSTREAM_COMMIT} && \
     mkdir patches
 
-# Apply patches and compile
-COPY patches/*.patch patches/
+# Apply patches
+COPY patches/* patches/
+RUN if [ $(ls patches/*.patch > /dev/null) ]; then git apply patches/*.patch; fi
 
-RUN git apply patches/*.patch && \
-    make readsb RTLSDR=yes
+# Compile
+RUN make readsb RTLSDR=yes
 
 
 # Release

@@ -6,7 +6,8 @@ ARG UPSTREAM_BRANCH
 ARG UPSTREAM_COMMIT
 
 # Packages
-RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zstd-dev zlib-dev
+RUN apk add --no-cache build-base git ncurses-dev zstd-dev zlib-dev \
+    librtlsdr-dev bladerf-dev hackrf-dev soapy-sdr-dev
 
 # Workdir
 WORKDIR /app
@@ -21,14 +22,15 @@ COPY patches/* patches/
 RUN if [ $(ls patches/*.patch > /dev/null) ]; then git apply patches/*.patch; fi
 
 # Compile
-RUN make readsb RTLSDR=yes
+RUN make readsb RTLSDR=yes BLADERF=yes HACKRF=yes SOAPYSDR=yes
 
 
 # Release
 FROM alpine:3.19.1 AS release
 
 # Packages
-RUN apk add --no-cache bash rtl-sdr ncurses-libs zstd-libs zlib
+RUN apk add --no-cache bash ncurses-libs zstd-libs zlib \
+    rtl-sdr bladerf-libs hackrf-libs soapy-sdr-libs
 
 # Workdir
 WORKDIR /app
@@ -57,8 +59,6 @@ ENV LAT="" \
     \
     DEVICE_TYPE="rtlsdr" \
     DEVICE="" \
-    ENABLE_AGC="no" \
-    PPM="0" \
     GAIN="-10" \
     FREQ="1090000000" \
     PREAMBLE_THRESHOLD="" \
@@ -92,6 +92,7 @@ ENV LAT="" \
     SNIP="" \
     WRITE_PROM="" \
     WRITE_STATE="" \
+    WRITE_STATE_EVERY="" \
     WRITE_STATE_ONLY_ON_EXIT="no" \
     WRITE_GLOBE_HISTORY="" \
     WRITE_JSON="" \
@@ -104,6 +105,7 @@ ENV LAT="" \
     JSON_LOCATION_ACCURACY="2" \
     JSON_TRACE_INTERVAL="" \
     JSON_RELIABLE="" \
+    AUTO_EXIT="" \
     RANGE_OUTLINE_HOURS="" \
     \
     JAERO_TIMEOUT="" \
@@ -134,15 +136,21 @@ ENV LAT="" \
     NET_JSON_PORT_INCLUDE_NOPOSITION="no" \
     NET_RO_SIZE="" \
     NET_RO_INTERVAL="0.05" \
-    NET_RO_PORT="" \
-    NET_RI_PORT="" \
+    NET_RO_INTERVAL_BEAST_REDUCE="" \
     NET_BO_PORT="" \
     NET_BI_PORT="" \
+    NET_RO_PORT="" \
+    NET_RI_PORT="" \
+    NET_UAT_REPLAY_PORT="" \
+    NET_UAT_IN_PORT="" \
     NET_SBS_REDUCE="" \
     NET_SBS_PORT="" \
     NET_SBS_IN_PORT="" \
     NET_SBS_JAERO_PORT="" \
     NET_SBS_JAERO_IN_PORT="" \
+    NET_ASTERIX_OUT_PORT="" \
+    NET_ASTERIX_IN_PORT="" \
+    NET_ASTERIX_REDUCE="" \
     NET_VRS_INTERVAL="" \
     NET_VRS_PORT="" \
     NET_BEAST_REDUCE_INTERVAL="" \
@@ -150,6 +158,16 @@ ENV LAT="" \
     NET_BEAST_REDUCE_FILTER_ALL="" \
     NET_BEAST_REDUCE_OUT_PORT="" \
     TAR1090_USE_API="no" \
+    \
+    ENABLE_AGC="no" \
+    PPM="0" \
+    \
+    BLADERF_FPGA="" \
+    BLADERF_DECIMATION="" \
+    BLADERF_BANDWIDTH="" \
+    \
+    HACKRF_ENABLE_AMPGAIN="" \
+    HACKRF_VGAGAIN="" \
     \
     DUMP_BEAST="" \
     BEAST_SERIAL="" \
@@ -164,6 +182,13 @@ ENV LAT="" \
     IFILE="" \
     IFORMAT="" \
     THROTTLE="no" \
+    \
+    SOAPY_DEVICE="" \
+    SOAPY_ANTENNA="" \
+    SOAPY_BANDWIDTH="" \
+    SOAPY_ENABLE_AGC="no" \
+    SOAPY_GAIN_ELEMENT="" \
+    \
     CUSTOM=""
 
 # Entrypoint

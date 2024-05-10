@@ -6,6 +6,8 @@ This project makes [wiedehopf]'s [Readsb] software available as a Docker image.
 
 Due to the API limitations of Docker Hub, we use GitHub as container image registry.
 
+The image is compiled with RTLSDR, BladeRF, HackRF and SoapySDR enabled (BladeRF, HackRF and SoapySDR are untested).
+
 ## Other projects
 
 We have other Flighttracking projects, check our [GitHub profile].

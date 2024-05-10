@@ -18,8 +18,6 @@ UUID_FILE="${UUID_FILE:-/data/uuid.txt}"
 
 DEVICE_TYPE="${DEVICE_TYPE:-rtlsdr}"
 DEVICE="${DEVICE:-}"
-ENABLE_AGC="${ENABLE_AGC:-no}"
-PPM="${PPM:-0}"
 GAIN="${GAIN:--10}"
 FREQ="${FREQ:-1090000000}"
 PREAMBLE_THRESHOLD="${PREAMBLE_THRESHOLD:-}"
@@ -53,6 +51,7 @@ GNSS="${GNSS:-no}"
 SNIP="${SNIP:-}"
 WRITE_PROM="${WRITE_PROM:-}"
 WRITE_STATE="${WRITE_STATE:-}"
+WRITE_STATE_EVERY="${WRITE_STATE_EVERY:-}"
 WRITE_STATE_ONLY_ON_EXIT="${WRITE_STATE_ONLY_ON_EXIT:-no}"
 WRITE_GLOBE_HISTORY="${WRITE_GLOBE_HISTORY:-}"
 WRITE_JSON="${WRITE_JSON:-}"
@@ -65,6 +64,7 @@ WRITE_RECEIVER_ID_JSON="${WRITE_RECEIVER_ID_JSON:-no}"
 JSON_LOCATION_ACCURACY="${JSON_LOCATION_ACCURACY:-2}"
 JSON_TRACE_INTERVAL="${JSON_TRACE_INTERVAL:-}"
 JSON_RELIABLE="${JSON_RELIABLE:-}"
+AUTO_EXIT="${AUTO_EXIT:-}"
 RANGE_OUTLINE_HOURS="${RANGE_OUTLINE_HOURS:-}"
 
 JAERO_TIMEOUT="${JAERO_TIMEOUT:-}"
@@ -95,15 +95,21 @@ NET_JSON_PORT_INTERVAL="${NET_JSON_PORT_INTERVAL:-}"
 NET_JSON_PORT_INCLUDE_NOPOSITION="${NET_JSON_PORT_INCLUDE_NOPOSITION:-no}"
 NET_RO_SIZE="${NET_RO_SIZE:-}"
 NET_RO_INTERVAL="${NET_RO_INTERVAL:-0.05}"
-NET_RO_PORT="${NET_RO_PORT:-}" # normally 30002
-NET_RI_PORT="${NET_RI_PORT:-}" # normally 30001
+NET_RO_INTERVAL_BEAST_REDUCE="${NET_RO_INTERVAL_BEAST_REDUCE:-}"
 NET_BO_PORT="${NET_BO_PORT:-}" # normally 30005
 NET_BI_PORT="${NET_BI_PORT:-}" # normally 30004,30104
+NET_RO_PORT="${NET_RO_PORT:-}" # normally 30002
+NET_RI_PORT="${NET_RI_PORT:-}" # normally 30001
+NET_UAT_REPLAY_PORT="${NET_UAT_REPLAY_PORT:-}"
+NET_UAT_IN_PORT="${NET_UAT_IN_PORT:-}"
 NET_SBS_REDUCE="${NET_SBS_REDUCE:-}"
 NET_SBS_PORT="${NET_SBS_PORT:-}" # normally 30003
 NET_SBS_IN_PORT="${NET_SBS_IN_PORT:-}"
 NET_SBS_JAERO_PORT="${NET_SBS_JAERO_PORT:-}"
 NET_SBS_JAERO_IN_PORT="${NET_SBS_JAERO_IN_PORT:-}"
+NET_ASTERIX_OUT_PORT="${NET_ASTERIX_OUT_PORT:-}"
+NET_ASTERIX_IN_PORT="${NET_ASTERIX_IN_PORT:-}"
+NET_ASTERIX_REDUCE="${NET_ASTERIX_REDUCE:-}"
 NET_VRS_INTERVAL="${NET_VRS_INTERVAL:-}"
 NET_VRS_PORT="${NET_VRS_PORT:-}"
 NET_BEAST_REDUCE_INTERVAL="${NET_BEAST_REDUCE_INTERVAL:-}"
@@ -112,6 +118,20 @@ NET_BEAST_REDUCE_FILTER_ALL="${NET_BEAST_REDUCE_FILTER_ALL:-}"
 NET_BEAST_REDUCE_OUT_PORT="${NET_BEAST_REDUCE_OUT_PORT:-}"
 TAR1090_USE_API="${TAR1090_USE_API:-no}"
 
+# RTLSDR
+ENABLE_AGC="${ENABLE_AGC:-no}"
+PPM="${PPM:-0}"
+
+# BladeRF
+BLADERF_FPGA="${BLADERF_FPGA:-}"
+BLADERF_DECIMATION="${BLADERF_DECIMATION:-}"
+BLADERF_BANDWIDTH="${BLADERF_BANDWIDTH:-}"
+
+# HackRF
+HACKRF_ENABLE_AMPGAIN="${HACKRF_ENABLE_AMPGAIN:-}"
+HACKRF_VGAGAIN="${HACKRF_VGAGAIN:-}"
+
+# Modes-S Beast
 DUMP_BEAST="${DUMP_BEAST:-}"
 BEAST_SERIAL="${BEAST_SERIAL:-}"
 BEAST_DF1117_ON="${BEAST_DF1117_ON:-no}"
@@ -122,9 +142,17 @@ BEAST_FEC_OFF="${BEAST_FEC_OFF:-no}"
 BEAST_MODEAC="${BEAST_MODEAC:-no}"
 BEAST_BAUDRATE="${BEAST_BAUDRATE:-}"
 
+# ifile
 IFILE="${IFILE:-}"
 IFORMAT="${IFORMAT:-}"
 THROTTLE="${THROTTLE:-no}"
+
+# SoapySDR
+SOAPY_DEVICE="${SOAPY_DEVICE:-}"
+SOAPY_ANTENNA="${SOAPY_ANTENNA:-}"
+SOAPY_BANDWIDTH="${SOAPY_BANDWIDTH:-}"
+SOAPY_ENABLE_AGC="${SOAPY_ENABLE_AGC:-no}"
+SOAPY_GAIN_ELEMENT="${SOAPY_GAIN_ELEMENT:-}"
 
 CUSTOM="${CUSTOM:-}"
 
@@ -213,15 +241,6 @@ then
 fi
 
 
-if [ "$ENABLE_AGC" = "yes" ]
-then
-    ARGS="${ARGS} --enable-agc"
-fi
-
-if [ ! -z "$PPM" ]
-then
-    ARGS="${ARGS} --ppm ${PPM}"
-fi
 
 if [ ! -z "$GAIN" ]
 then
@@ -344,6 +363,11 @@ then
     ARGS="${ARGS} --write-state ${WRITE_STATE}"
 fi
 
+if [ ! -z "$WRITE_STATE_EVERY" ]
+then
+    ARGS="${ARGS} --write-state-every ${WRITE_STATE_EVERY}"
+fi
+
 if [ "$WRITE_STATE_ONLY_ON_EXIT" = "yes" ]
 then
     ARGS="${ARGS} --write-state-only-on-exit"
@@ -402,6 +426,11 @@ fi
 if [ ! -z "$JSON_RELIABLE" ]
 then
     ARGS="${ARGS} --json-reliable ${JSON_RELIABLE}"
+fi
+
+if [ ! -z "$AUTO_EXIT" ]
+then
+    ARGS="${ARGS} --auto-exit ${AUTO_EXIT}"
 fi
 
 if [ ! -z "$RANGE_OUTLINE_HOURS" ]
@@ -542,14 +571,9 @@ then
     ARGS="${ARGS} --net-ro-interval ${NET_RO_INTERVAL}"
 fi
 
-if [ ! -z "$NET_RO_PORT" ]
+if [ ! -z "$NET_RO_INTERVAL_BEAST_REDUCE" ]
 then
-    ARGS="${ARGS} --net-ro-port ${NET_RO_PORT}"
-fi
-
-if [ ! -z "$NET_RI_PORT" ]
-then
-    ARGS="${ARGS} --net-ri-port ${NET_RI_PORT}"
+    ARGS="${ARGS} --net-ro-interval-beast-reduce ${NET_RO_INTERVAL_BEAST_REDUCE}"
 fi
 
 if [ ! -z "$NET_BO_PORT" ]
@@ -560,6 +584,26 @@ fi
 if [ ! -z "$NET_BI_PORT" ]
 then
     ARGS="${ARGS} --net-bi-port ${NET_BI_PORT}"
+fi
+
+if [ ! -z "$NET_RO_PORT" ]
+then
+    ARGS="${ARGS} --net-ro-port ${NET_RO_PORT}"
+fi
+
+if [ ! -z "$NET_RI_PORT" ]
+then
+    ARGS="${ARGS} --net-ri-port ${NET_RI_PORT}"
+fi
+
+if [ ! -z "$NET_UAT_REPLAY_PORT" ]
+then
+    ARGS="${ARGS} --net-uat-replay-port ${NET_UAT_REPLAY_PORT}"
+fi
+
+if [ ! -z "$NET_UAT_IN_PORT" ]
+then
+    ARGS="${ARGS} --net-uat-in-port ${NET_UAT_IN_PORT}"
 fi
 
 if [ ! -z "$NET_SBS_REDUCE" ]
@@ -585,6 +629,21 @@ fi
 if [ ! -z "$NET_SBS_JAERO_IN_PORT" ]
 then
     ARGS="${ARGS} --net-jaero-in-port ${NET_SBS_JAERO_IN_PORT}"
+fi
+
+if [ ! -z "$NET_ASTERIX_OUT_PORT" ]
+then
+    ARGS="${ARGS} --net-asterix-out-port ${NET_ASTERIX_OUT_PORT}"
+fi
+
+if [ ! -z "$NET_ASTERIX_IN_PORT" ]
+then
+    ARGS="${ARGS} --net-asterix-in-port ${NET_ASTERIX_IN_PORT}"
+fi
+
+if [ ! -z "$NET_ASTERIX_REDUCE" ]
+then
+    ARGS="${ARGS} --net-asterix-reduce ${NET_ASTERIX_REDUCE}"
 fi
 
 if [ ! -z "$NET_VRS_INTERVAL" ]
@@ -623,6 +682,48 @@ then
 fi
 
 
+# RTLSDR
+if [ "$ENABLE_AGC" = "yes" ]
+then
+    ARGS="${ARGS} --enable-agc"
+fi
+
+if [ ! -z "$PPM" ]
+then
+    ARGS="${ARGS} --ppm ${PPM}"
+fi
+
+
+# BladeRF
+if [ ! -z "$BLADERF_FPGA" ]
+then
+    ARGS="${ARGS} --bladerf-fpga ${BLADERF_FPGA}"
+fi
+
+if [ ! -z "$BLADERF_DECIMATION" ]
+then
+    ARGS="${ARGS} --bladerf-decimation ${BLADERF_DECIMATION}"
+fi
+
+if [ ! -z "$BLADERF_BANDWIDTH" ]
+then
+    ARGS="${ARGS} --bladerf-bandwidth ${BLADERF_BANDWIDTH}"
+fi
+
+
+# HackRF
+if [ ! -z "$HACKRF_ENABLE_AMPGAIN" ]
+then
+    ARGS="${ARGS} --hackrf-enable-ampgain ${HACKRF_ENABLE_AMPGAIN}"
+fi
+
+if [ ! -z "$HACKRF_VGAGAIN" ]
+then
+    ARGS="${ARGS} --hackrf-vgagain ${HACKRF_VGAGAIN}"
+fi
+
+
+# Modes-S Beast
 if [ ! -z "$DUMP_BEAST" ]
 then
     ARGS="${ARGS} --dump-beast ${DUMP_BEAST}"
@@ -669,6 +770,7 @@ then
 fi
 
 
+# ifile
 if [ ! -z "$IFILE" ]
 then
     ARGS="${ARGS} --ifile ${IFILE}"
@@ -682,6 +784,33 @@ fi
 if [ "$THROTTLE" = "yes" ]
 then
     ARGS="${ARGS} --throttle"
+fi
+
+
+# SoapySDR
+if [ ! -z "$SOAPY_DEVICE" ]
+then
+    ARGS="${ARGS} --soapy-device ${SOAPY_DEVICE}"
+fi
+
+if [ ! -z "$SOAPY_ANTENNA" ]
+then
+    ARGS="${ARGS} --soapy-antenna ${SOAPY_ANTENNA}"
+fi
+
+if [ ! -z "$SOAPY_BANDWIDTH" ]
+then
+    ARGS="${ARGS} --soapy-bandwidth ${SOAPY_BANDWIDTH}"
+fi
+
+if [ "$SOAPY_ENABLE_AGC" = "yes" ]
+then
+    ARGS="${ARGS} --soapy-enable-agc"
+fi
+
+if [ ! -z "$SOAPY_GAIN_ELEMENT" ]
+then
+    ARGS="${ARGS} --soapy-gain-element ${SOAPY_GAIN_ELEMENT}"
 fi
 
 

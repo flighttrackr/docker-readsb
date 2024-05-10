@@ -6,8 +6,8 @@ ARG UPSTREAM_BRANCH
 ARG UPSTREAM_COMMIT
 
 # Packages
-RUN apk add --no-cache build-base git ncurses-dev zstd-dev zlib-dev && \
-    apk add --no-cache librtlsdr-dev bladerf-dev hackrf-dev soapy-sdr-dev
+RUN apk add --no-cache build-base git ncurses-dev zstd-dev zlib-dev \
+    librtlsdr-dev bladerf-dev hackrf-dev soapy-sdr-dev
 
 # Workdir
 WORKDIR /app
@@ -29,8 +29,8 @@ RUN make readsb RTLSDR=yes BLADERF=yes HACKRF=yes SOAPYSDR=yes
 FROM alpine:3.19.1 AS release
 
 # Packages
-RUN apk add --no-cache bash ncurses-libs zstd-libs zlib && \
-    apk add --no-cache rtl-sdr bladerf-libs hackrf-libs soapy-sdr-libs
+RUN apk add --no-cache bash ncurses-libs zstd-libs zlib \
+    rtl-sdr bladerf-libs hackrf-libs soapy-sdr-libs
 
 # Workdir
 WORKDIR /app

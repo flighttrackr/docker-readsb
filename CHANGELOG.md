@@ -6,11 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Added new options `DEVEL` (semicolon separated), `SDR_BUFFER_SIZE`, `DUMP_BEAST`, `API_SHUTDOWN_DELAY`
-- Added new options `FORWARD_MLAT_BEAST` and `FORWARD_MLAT_SBS`, dropped option `FORWARD_MLAT`
+- Added untested support for BladeRF, HackRF, SoapySDR
+- Added many new options
 
 ### Changed
-- Update Readsb to [#fc50225](https://github.com/wiedehopf/readsb/commit/fc50225b4c6497031bdf7473b848180fe08f8eff)
+- Update Readsb to [#0d9bf67](https://github.com/wiedehopf/readsb/commit/0d9bf67d2057a9ca59c61d96de4dfdbfc24dd87e)
 
 ## [1.3.0] - 2022-07-26
 ### Added

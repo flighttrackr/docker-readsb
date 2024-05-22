@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added many new options
 
 ### Changed
-- Update Readsb to [#0d9bf67](https://github.com/wiedehopf/readsb/commit/0d9bf67d2057a9ca59c61d96de4dfdbfc24dd87e)
+- Switch to Readsb dev branch
+- Update Readsb to [#3dc36ea](https://github.com/wiedehopf/readsb/commit/3dc36eac3d1905ead7427b3180f5885e0a7ba15f)
 
 ## [1.3.0] - 2022-07-26
 ### Added

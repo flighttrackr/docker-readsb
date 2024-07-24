@@ -1,5 +1,5 @@
 # Builder
-FROM alpine:3.20.1 AS builder
+FROM alpine:3.20.2 AS builder
 
 ARG UPSTREAM_REMOTE
 ARG UPSTREAM_BRANCH
@@ -26,7 +26,7 @@ RUN make readsb RTLSDR=yes BLADERF=yes HACKRF=yes SOAPYSDR=yes
 
 
 # Release
-FROM alpine:3.20.1 AS release
+FROM alpine:3.20.2 AS release
 
 # Packages
 RUN apk add --no-cache bash ncurses-libs zstd-libs zlib \
